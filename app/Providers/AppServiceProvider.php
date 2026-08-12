@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
 use App\Models\StrukturOrganisasi;
+use Illuminate\Support\Facades\URL;
 use App\Models\Ppdb;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,8 +19,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+
+    if (config('app.env') !== 'local') {
+        URL::forceScheme('https');
+    }
          Paginator::useBootstrapFive();
-         
+
         try {
 
             if (Schema::hasTable('struktur_organisasis')) {
